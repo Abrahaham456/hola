@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>flor</title>
+	<style>
+		:root {
+			color-scheme: dark;
+			--night: #05030b;
+			--violet: #24103b;
+			--yellow: #ffff00;
+		}
+
+		* { box-sizing: border-box; }
+
+		html, body {
+			width: 100%;
+			min-height: 100%;
+			margin: 0;
+		}
+
+		body {
+			min-height: 100vh;
+			overflow: hidden;
+			background: var(--night);
+			font-family: Georgia, serif;
+		}
+
+		.escena {
+			display: block;
+			width: 100vw;
+			height: 100vh;
+		}
+
+		svg {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+
+		.titulo {
+			fill: var(--yellow);
+			font-family: "Segoe Print", "Bradley Hand", cursive;
+			font-size: 46px;
+			font-weight: 700;
+			letter-spacing: .5px;
+			paint-order: stroke;
+			stroke: rgba(45, 14, 48, .75);
+			stroke-width: 3px;
+			filter: url(#brillo);
+		}
+
+		.estrella { fill: #fff; }
+
+		.flor {
+			animation: respirar 5s ease-in-out infinite;
+		}
+
+		.flor:nth-of-type(2n) { animation-delay: -1.6s; }
+		.flor:nth-of-type(3n) { animation-delay: -3s; }
+
+		.petalo { fill: url(#degradadoPetalo); }
+		.centro { fill: url(#degradadoCentro); stroke: #160c05; stroke-width: 5; }
+		.semilla { fill: #9b6423; opacity: .82; }
+
+		.tallo {
+			fill: url(#degradadoTallo);
+			stroke: #173e13;
+			stroke-width: 3;
+		}
+
+		.hoja {
+			fill: url(#degradadoHoja);
+			stroke: #173e13;
+			stroke-width: 3;
+		}
+
+		.papel { fill: url(#degradadoPapel); stroke: #d9c9af; stroke-width: 3; }
+		.papel-oro { fill: #d99538; opacity: .9; }
+
+		@keyframes respirar {
+			0%, 100% { opacity: 1; }
+			50% { opacity: .92; }
+		}
+
+		.flor > animateTransform {
+			transform-box: fill-box;
+		}
+
+		.petalo-caida {
+			fill: url(#degradadoPetalo);
+			opacity: 0;
+			transform-box: fill-box;
+			transform-origin: center;
+			animation: caerPetalo linear infinite;
+		}
+
+		@keyframes caerPetalo {
+			0% { opacity: 0; transform: translateY(-80px) rotate(0deg); }
+			10% { opacity: .85; }
+			50% { opacity: .72; transform: translate(28px, 520px) rotate(190deg); }
+			100% { opacity: 0; transform: translate(-22px, 1080px) rotate(420deg); }
+		}
+
+		@media (max-width: 600px) {
+			.titulo { font-size: 55px; }
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			.flor { animation: none; }
+		}
+	</style>
+</head>
+<body>
+<main class="escena" aria-label="Ramo de siete girasoles para ti">
+	<svg viewBox="0 0 900 1000" role="img" aria-labelledby="titulo descripcion">
+		<title id="titulo">Para Ti - Te Amo</title>
+		<desc id="descripcion">Ramo vectorial de siete girasoles amarillos sobre un fondo espacial morado.</desc>
+
+		<defs>
+			<linearGradient id="fondo" x1="0" y1="0" x2="1" y2="1">
+				<stop offset="0" stop-color="#2b1244" />
+				<stop offset=".5" stop-color="#12091f" />
+				<stop offset="1" stop-color="#020207" />
+			</linearGradient>
+			<linearGradient id="degradadoPetalo" x1="0" y1="1" x2="0" y2="0">
+				<stop offset="0" stop-color="#ff8c00" />
+				<stop offset=".52" stop-color="#ffd700" />
+				<stop offset="1" stop-color="#ffff00" />
+			</linearGradient>
+			<radialGradient id="degradadoCentro" cx="35%" cy="30%">
+				<stop offset="0" stop-color="#8e5b20" />
+				<stop offset=".35" stop-color="#4c2810" />
+				<stop offset="1" stop-color="#120803" />
+			</radialGradient>
+			<linearGradient id="degradadoTallo" x1="0" x2="1">
+				<stop stop-color="#164d1b" />
+				<stop offset=".5" stop-color="#66a92e" />
+				<stop offset="1" stop-color="#1e5b1c" />
+			</linearGradient>
+			<linearGradient id="degradadoHoja" x1="0" y1="0" x2="1" y2="1">
+				<stop stop-color="#83c83d" />
+				<stop offset="1" stop-color="#194c19" />
+			</linearGradient>
+			<linearGradient id="degradadoPapel" x1="0" y1="0" x2="1" y2="1">
+				<stop stop-color="#fffdf5" />
+				<stop offset=".52" stop-color="#efe4d1" />
+				<stop offset="1" stop-color="#fffaf0" />
+			</linearGradient>
+			<filter id="brillo" x="-30%" y="-30%" width="160%" height="160%">
+				<feGaussianBlur stdDeviation="5" result="blur" />
+				<feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+			</filter>
+			<filter id="bokeh" x="-50%" y="-50%" width="200%" height="200%">
+				<feGaussianBlur stdDeviation="18" />
+			</filter>
+			<g id="petalos">
+				<ellipse class="petalo" cx="0" cy="-75" rx="24" ry="72" />
+				<use href="#petaloBase" transform="rotate(22.5)" />
+				<use href="#petaloBase" transform="rotate(45)" />
+				<use href="#petaloBase" transform="rotate(67.5)" />
+				<use href="#petaloBase" transform="rotate(90)" />
+				<use href="#petaloBase" transform="rotate(112.5)" />
+				<use href="#petaloBase" transform="rotate(135)" />
+				<use href="#petaloBase" transform="rotate(157.5)" />
+				<use href="#petaloBase" transform="rotate(180)" />
+				<use href="#petaloBase" transform="rotate(202.5)" />
+				<use href="#petaloBase" transform="rotate(225)" />
+				<use href="#petaloBase" transform="rotate(247.5)" />
+				<use href="#petaloBase" transform="rotate(270)" />
+				<use href="#petaloBase" transform="rotate(292.5)" />
+				<use href="#petaloBase" transform="rotate(315)" />
+				<use href="#petaloBase" transform="rotate(337.5)" />
+			</g>
+			<ellipse id="petaloBase" class="petalo" cx="0" cy="-75" rx="24" ry="72" />
+			<g id="semillas">
+				<circle class="semilla" cx="-20" cy="-14" r="4" /><circle class="semilla" cx="5" cy="-20" r="3" />
+				<circle class="semilla" cx="22" cy="-4" r="4" /><circle class="semilla" cx="-5" cy="4" r="3" />
+				<circle class="semilla" cx="-24" cy="14" r="3" /><circle class="semilla" cx="12" cy="18" r="4" />
+				<circle class="semilla" cx="0" cy="25" r="3" />
+			</g>
+		</defs>
+
+		<rect width="900" height="1000" fill="url(#fondo)" />
+		<g opacity=".9">
+			<circle class="estrella" cx="78" cy="130" r="3" /><circle class="estrella" cx="180" cy="82" r="2" />
+			<circle class="estrella" cx="760" cy="115" r="3" /><circle class="estrella" cx="830" cy="270" r="2" />
+			<circle class="estrella" cx="92" cy="420" r="2" /><circle class="estrella" cx="700" cy="365" r="2" />
+			<circle class="estrella" cx="805" cy="570" r="3" /><circle class="estrella" cx="120" cy="675" r="2" />
+		</g>
+		<g fill="#ff55ad" opacity=".18" filter="url(#bokeh)">
+			<text x="110" y="865" font-size="130">♥</text><text x="730" y="900" font-size="105">♥</text>
+		</g>
+
+		<g aria-hidden="true">
+			<ellipse class="petalo-caida" cx="90" cy="-40" rx="11" ry="25" style="animation-duration: 8s; animation-delay: -2s" />
+			<ellipse class="petalo-caida" cx="190" cy="-120" rx="9" ry="21" style="animation-duration: 10s; animation-delay: -6s" />
+			<ellipse class="petalo-caida" cx="305" cy="-60" rx="10" ry="23" style="animation-duration: 9s; animation-delay: -4s" />
+			<ellipse class="petalo-caida" cx="420" cy="-150" rx="8" ry="20" style="animation-duration: 11s; animation-delay: -8s" />
+			<ellipse class="petalo-caida" cx="545" cy="-90" rx="11" ry="25" style="animation-duration: 8.5s; animation-delay: -3s" />
+			<ellipse class="petalo-caida" cx="680" cy="-170" rx="9" ry="22" style="animation-duration: 10.5s; animation-delay: -7s" />
+			<ellipse class="petalo-caida" cx="815" cy="-35" rx="10" ry="24" style="animation-duration: 9.5s; animation-delay: -5s" />
+			<ellipse class="petalo-caida" cx="145" cy="80" rx="8" ry="19" style="animation-duration: 12s; animation-delay: -9s" />
+			<ellipse class="petalo-caida" cx="735" cy="170" rx="9" ry="21" style="animation-duration: 8.8s; animation-delay: -1s" />
+			<ellipse class="petalo-caida" cx="35" cy="210" rx="8" ry="19" style="animation-duration: 9.2s; animation-delay: -6s" />
+			<ellipse class="petalo-caida" cx="250" cy="130" rx="10" ry="22" style="animation-duration: 10.8s; animation-delay: -2s" />
+			<ellipse class="petalo-caida" cx="360" cy="230" rx="8" ry="19" style="animation-duration: 8.2s; animation-delay: -7s" />
+			<ellipse class="petalo-caida" cx="490" cy="95" rx="10" ry="23" style="animation-duration: 9.8s; animation-delay: -5s" />
+			<ellipse class="petalo-caida" cx="610" cy="130" rx="8" ry="20" style="animation-duration: 11.2s; animation-delay: -9s" />
+			<ellipse class="petalo-caida" cx="860" cy="220" rx="10" ry="24" style="animation-duration: 8.6s; animation-delay: -4s" />
+			<ellipse class="petalo-caida" cx="55" cy="500" rx="9" ry="21" style="animation-duration: 10.2s; animation-delay: -8s" />
+			<ellipse class="petalo-caida" cx="210" cy="570" rx="8" ry="19" style="animation-duration: 9.4s; animation-delay: -3s" />
+			<ellipse class="petalo-caida" cx="300" cy="690" rx="10" ry="23" style="animation-duration: 11s; animation-delay: -10s" />
+			<ellipse class="petalo-caida" cx="600" cy="620" rx="8" ry="20" style="animation-duration: 8.4s; animation-delay: -1s" />
+			<ellipse class="petalo-caida" cx="745" cy="540" rx="10" ry="23" style="animation-duration: 10s; animation-delay: -6s" />
+			<ellipse class="petalo-caida" cx="850" cy="700" rx="8" ry="19" style="animation-duration: 9s; animation-delay: -2s" />
+			<ellipse class="petalo-caida" cx="105" cy="770" rx="10" ry="22" style="animation-duration: 11.5s; animation-delay: -7s" />
+			<ellipse class="petalo-caida" cx="690" cy="820" rx="9" ry="21" style="animation-duration: 8.7s; animation-delay: -5s" />
+			<ellipse class="petalo-caida" cx="820" cy="900" rx="10" ry="23" style="animation-duration: 10.6s; animation-delay: -9s" />
+		</g>
+
+		<text class="titulo" x="500" y="97" text-anchor="middle">CHI AMU mi niña 🌻</text>
+
+		<!-- Tallos y hojas densos, reunidos hacia la base -->
+		<g>
+			<path class="tallo" d="M432 790 C400 610 280 400 245 245 L265 238 C315 445 440 590 466 790Z" />
+			<path class="tallo" d="M470 800 C470 585 455 380 450 205 L472 205 C490 420 500 620 492 800Z" />
+			<path class="tallo" d="M510 800 C550 600 675 410 670 270 L692 276 C705 450 580 650 540 800Z" />
+			<path class="tallo" d="M450 800 C400 650 370 520 350 390 L370 385 C405 560 445 670 480 800Z" />
+			<path class="tallo" d="M505 800 C535 650 570 530 585 400 L605 406 C580 590 550 700 530 800Z" />
+			<path class="hoja" d="M350 600 C275 560 230 575 215 630 C275 650 325 637 365 615Z" />
+			<path class="hoja" d="M390 685 C310 660 265 688 260 740 C320 740 365 720 410 695Z" />
+			<path class="hoja" d="M555 585 C635 535 690 550 705 605 C645 630 600 620 545 602Z" />
+			<path class="hoja" d="M535 690 C615 650 670 670 685 720 C625 740 580 725 520 705Z" />
+			<path class="hoja" d="M455 640 C390 590 345 600 330 645 C380 670 420 660 465 652Z" />
+		</g>
+
+		<!-- Siete girasoles -->
+		<g class="flor" transform="translate(270 250) scale(.82)"><animateTransform attributeName="transform" type="rotate" values="-1 270 250; 2 270 250; -1 270 250" dur="5s" repeatCount="indefinite" additive="sum" /><use href="#petalos" /><circle class="centro" r="48" /><use href="#semillas" /></g>
+		<g class="flor" transform="translate(450 205) scale(.95)"><animateTransform attributeName="transform" type="rotate" values="1 450 205; -2 450 205; 1 450 205" dur="5.8s" repeatCount="indefinite" additive="sum" /><use href="#petalos" /><circle class="centro" r="52" /><use href="#semillas" /></g>
+		<g class="flor" transform="translate(650 270) scale(.82)"><animateTransform attributeName="transform" type="rotate" values="1 650 270; -2 650 270; 1 650 270" dur="5.4s" repeatCount="indefinite" additive="sum" /><use href="#petalos" /><circle class="centro" r="48" /><use href="#semillas" /></g>
+		<g class="flor" transform="translate(350 390) scale(.62)"><animateTransform attributeName="transform" type="rotate" values="-2 350 390; 2 350 390; -2 350 390" dur="4.8s" repeatCount="indefinite" additive="sum" /><use href="#petalos" /><circle class="centro" r="44" /><use href="#semillas" /></g>
+		<g class="flor" transform="translate(555 405) scale(.62)"><animateTransform attributeName="transform" type="rotate" values="2 555 405; -2 555 405; 2 555 405" dur="5.2s" repeatCount="indefinite" additive="sum" /><use href="#petalos" /><circle class="centro" r="44" /><use href="#semillas" /></g>
+		<g class="flor" transform="translate(385 500) scale(.48)"><animateTransform attributeName="transform" type="rotate" values="-2 385 500; 2 385 500; -2 385 500" dur="4.6s" repeatCount="indefinite" additive="sum" /><use href="#petalos" /><circle class="centro" r="40" /><use href="#semillas" /></g>
+		<g class="flor" transform="translate(525 510) scale(.48)"><animateTransform attributeName="transform" type="rotate" values="2 525 510; -2 525 510; 2 525 510" dur="5s" repeatCount="indefinite" additive="sum" /><use href="#petalos" /><circle class="centro" r="40" /><use href="#semillas" /></g>
+
+		<!-- Envoltura y lazo -->
+		<path class="papel" d="M220 650 L680 650 L585 965 L315 965Z" />
+		<path class="papel-oro" d="M220 650 L330 665 L370 965 L315 965Z" />
+		<path class="papel-oro" d="M680 650 L570 665 L530 965 L585 965Z" />
+		<path fill="#d88c2d" d="M365 752 C310 705 280 735 295 780 C320 820 365 796 400 770Z" />
+		<path fill="#d88c2d" d="M535 752 C590 705 620 735 605 780 C580 820 535 796 500 770Z" />
+		<ellipse cx="450" cy="765" rx="68" ry="27" fill="#b9671f" />
+		<path fill="#d88c2d" d="M430 785 L390 945 L440 920 L450 790Z" />
+		<path fill="#d88c2d" d="M470 785 L510 945 L460 920 L450 790Z" />
+
+		<text x="450" y="992" text-anchor="middle" fill="#fff4ad" font-size="30" font-style="italic"> 😊❤️ · 21/03/2026</text>
+	</svg>
+</main>
+</body>
+</html>
